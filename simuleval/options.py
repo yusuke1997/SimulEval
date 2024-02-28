@@ -7,7 +7,7 @@
 import argparse
 import os
 from simuleval import DEFAULT_HOSTNAME, DEFAULT_PORT
-from sacrebleu import TOKENIZERS
+from sacrebleu import BLEU
 
 
 def add_data_args(parser):
@@ -24,7 +24,7 @@ def add_data_args(parser):
                         "words (detokenized) and characters."
                         )
     parser.add_argument('--sacrebleu-tokenizer', type=str, default="13a",
-                        choices=TOKENIZERS.keys(),
+                        choices=BLEU.TOKENIZERS,
                         help="Tokenizer for sacrebleu."
                         )
     parser.add_argument('--no-space', action="store_true",

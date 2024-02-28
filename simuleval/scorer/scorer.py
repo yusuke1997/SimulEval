@@ -4,7 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import sacrebleu
-from . instance import TextInstance, AudioInstance
+from .instance import TextInstance, AudioInstance
 import os
 import sys
 import logging
@@ -130,6 +130,7 @@ class Scorer(object):
 
     def get_latency_score(self):
         results = {}
+        print(self.instances)
         for metric in ["AL", "AP", "DAL"]:
             results[metric] = mean(
                 [seg.metrics["latency"][metric]

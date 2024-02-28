@@ -19,7 +19,7 @@ from simuleval import READ_ACTION, WRITE_ACTION
 from simuleval.online import start_client, start_server
 from simuleval.utils.agent_finder import find_agent_cls
 from simuleval.utils.functional import split_list_into_chunks
-
+from tqdm import tqdm
 
 logging.basicConfig(
     format='%(asctime)s | %(levelname)-8s | %(name)-16s | %(message)s',
@@ -102,7 +102,7 @@ def decode(args, client, result_queue, instance_ids):
     agent = agent_cls(args)
 
     # Decode
-    for instance_id in instance_ids:
+    for instance_id in tqdm(instance_ids):
         states = agent.build_states(args, client, instance_id)
         while not states.finish_hypo():
             action = agent.policy(states)
