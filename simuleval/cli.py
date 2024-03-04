@@ -62,7 +62,7 @@ class DataWriter(object):
             while True:
                 try:
                     m = q.get()
-                    f.write(json.dumps(m) + '\n')
+                    f.write(json.dumps(m, ensure_ascii=False) + '\n')
                     f.flush()
                 except EOFError:
                     break
@@ -70,7 +70,7 @@ class DataWriter(object):
     def write_scores(self, scores):
         if self.started:
             with open(os.path.join(self.output_dir, "scores"), 'w') as f:
-                f.write(json.dumps(scores, indent=4))
+                f.write(json.dumps(scores, ensure_ascii=False, indent=4))
 
     def kill(self):
         if self.proc is not None:
@@ -115,7 +115,7 @@ def decode(args, client, result_queue, instance_ids):
                 raise SystemExit(f"Undefined action name {action}")
         sent_info = client.get_scores(instance_id)
         result_queue.put(sent_info)
-        logger.debug(f"Instance {instance_id} finished, results:\n{json.dumps(sent_info, indent=4)}")
+        logger.debug(f"Instance {instance_id} finished, results:\n{json.dumps(sent_info, ensure_ascii=False, indent=4)}")
 
 
 def evaluate(args, client, server_process=None):
@@ -145,7 +145,7 @@ def evaluate(args, client, server_process=None):
         decode(args, client, result_queue, indices)
 
     scores = client.get_scores()
-    logger.info("Evaluation results:\n" + json.dumps(scores, indent=4))
+    logger.info("Evaluation results:\n" + json.dumps(scores, ensure_ascii=False, indent=4))
     logger.info("Evaluation finished")
 
     data_writer.write_scores(scores)

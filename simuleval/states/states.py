@@ -62,10 +62,10 @@ class ListEntry(Entry):
         self.update(value)
 
     def __repr__(self):
-        return json.dumps(self.info(), indent=4)
+        return json.dumps(self.info(), ensure_ascii=False, indent=4)
 
     def __str__(self):
-        return json.dumps(self.info(), indent=4)
+        return json.dumps(self.info(), ensure_ascii=False, indent=4)
 
     def __iter__(self):
         for value in self.value:
@@ -218,10 +218,10 @@ class BaseStates(object):
         }
 
     def __str__(self):
-        return json.dumps(self.summarize(), indent=4)
+        return json.dumps(self.summarize(), ensure_ascii=False, indent=4)
 
     def __repr__(self):
-        return json.dumps(self.summarize(), indent=4)
+        return json.dumps(self.summarize(), ensure_ascii=False, indent=4)
 
     @check_status_method("read")
     def update_source(self, num_segment=1):
